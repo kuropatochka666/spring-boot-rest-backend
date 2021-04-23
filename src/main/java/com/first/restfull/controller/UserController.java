@@ -3,27 +3,31 @@ package com.first.restfull.controller;
 import com.first.restfull.model.User;
 import com.first.restfull.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
-
+@CrossOrigin
 @RestController
-@RequestMapping("api/")
+@RequestMapping("/api/users")
 public class UserController {
     @Autowired
     private UserRepository userRepository;
 
-    @GetMapping("users")
+    @GetMapping("/all")
     public List<User> getUsers(){
         return this.userRepository.findAll();
     }
 
 
-
-
+//    @GetMapping("{id}")
+//    public List<User> getOne(@PathVariable String id){
+//        return User.stream()
+//                .filter(message -> message.get("id").equals(id))
+//                .findFirst()
+//                .orElseThrow();
+//    }
 
 
 
