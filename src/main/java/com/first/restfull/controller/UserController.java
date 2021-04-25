@@ -16,22 +16,38 @@ public class UserController {
     private UserRepository userRepository;
 
     @GetMapping("/all")
-    public List<User> getUsers(){
+    public List<User> getUsers() {
         return this.userRepository.findAll();
     }
 
 
-//    @GetMapping("{id}")
-//    public List<User> getOne(@PathVariable String id){
-//        return User.stream()
-//                .filter(message -> message.get("id").equals(id))
-//                .findFirst()
-//                .orElseThrow();
-//    }
+    @GetMapping("/all/{id}")
+    public User getUser(@PathVariable Long id) {
+        Optional<User> user = userRepository.findById(id);
+        return user.get();
+    }
 
+    @PostMapping("/all/{id}")
+    public User addUser(@PathVariable Long id, @RequestBody User newUser) {
+        return userRepository.save(newUser);
+    }
 
+    @PutMapping("/all/{id}")
+    public User updateUser(@PathVariable Long id, @RequestBody User newUser) {
+        return userRepository.findById(id).map(user -> {
+            user.setFirstName(newUser.getFirstName());
+            user.setSecondName(newUser.getSecondName());
+            user.setEmail(newUser.getEmail());
+            return userRepository.save(user);
+        }).orElseGet(() -> {
+            return null;
+        });
+    }
 
-
+    @DeleteMapping("/all/{id}")
+    public void deleteUser(@PathVariable Long id) {
+        userRepository.deleteById(id);
+    }
 
 
 //    private int counter = 4;
