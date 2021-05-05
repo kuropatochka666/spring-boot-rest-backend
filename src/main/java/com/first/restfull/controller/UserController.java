@@ -27,8 +27,8 @@ public class UserController {
         return user.get();
     }
 
-    @PostMapping("/all/{id}")
-    public User addUser(@PathVariable Long id, @RequestBody User newUser) {
+    @PostMapping("/all")
+    public User addUser(@RequestBody User newUser) {
         return userRepository.save(newUser);
     }
 
